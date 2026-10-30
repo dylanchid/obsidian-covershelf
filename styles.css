@@ -1,0 +1,429 @@
+/* ============================================================
+   CoverShelf — modal styles
+   Uses Obsidian CSS variables throughout so dark/light themes
+   work without any extra media queries.
+   ============================================================ */
+
+/* ── Picker Modal ─────────────────────────────────────────── */
+
+.covershelf-picker-modal {
+  width: 780px !important;
+  max-width: 92vw !important;
+}
+
+.covershelf-picker-modal .modal-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  gap: 16px;
+}
+
+.covershelf-picker-header h2 {
+  margin: 0 0 2px;
+  font-size: 1.2em;
+}
+
+.covershelf-picker-author {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.covershelf-picker-layout {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Current cover panel */
+.covershelf-current-panel {
+  width: 140px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.covershelf-current-panel h3 {
+  margin: 0;
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.covershelf-current-img-wrap {
+  width: 128px;
+  height: 192px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.covershelf-current-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.covershelf-no-cover-placeholder {
+  color: var(--text-faint);
+  font-size: 0.8em;
+  text-align: center;
+  margin: 0;
+  padding: 8px;
+}
+
+.covershelf-current-filename {
+  font-size: 0.72em;
+  color: var(--text-faint);
+  margin: 0;
+  word-break: break-all;
+}
+
+/* Results panel */
+.covershelf-results-panel {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-right: 4px;
+}
+
+.covershelf-source-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.covershelf-source-label {
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.covershelf-source-tag {
+  font-size: 0.85em;
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-radius: 4px;
+  padding: 1px 5px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.covershelf-cover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  gap: 8px;
+}
+
+.covershelf-cover-item {
+  cursor: pointer;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: var(--background-secondary);
+  transition: border-color 0.12s, transform 0.1s;
+  padding: 4px;
+}
+
+.covershelf-cover-item:hover {
+  border-color: var(--background-modifier-border-hover);
+  transform: scale(1.02);
+}
+
+.covershelf-cover-item.is-selected {
+  border-color: var(--interactive-accent);
+}
+
+.covershelf-cover-img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+  background: var(--background-secondary-alt);
+}
+
+.covershelf-cover-meta {
+  font-size: 0.7em;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 2px;
+}
+
+.covershelf-no-results {
+  color: var(--text-faint);
+  font-size: 0.85em;
+  margin: 0;
+}
+
+.covershelf-spinner {
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+/* Picker footer */
+.covershelf-picker-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.covershelf-selected-info {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.covershelf-apply-btn {
+  flex-shrink: 0;
+}
+
+/* ── Fill Missing Modal ───────────────────────────────────── */
+
+.covershelf-fill-modal {
+  width: 580px !important;
+  max-width: 92vw !important;
+}
+
+.covershelf-fill-modal .modal-content {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.covershelf-fill-header h2 {
+  margin: 0 0 4px;
+}
+
+.covershelf-fill-subtitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.88em;
+}
+
+.covershelf-fill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.covershelf-fill-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.covershelf-fill-info {
+  min-width: 0;
+}
+
+.covershelf-fill-title {
+  font-weight: 500;
+  font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.covershelf-fill-author {
+  font-size: 0.8em;
+  color: var(--text-muted);
+}
+
+.covershelf-fill-thumb {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 3px;
+  display: block;
+}
+
+.covershelf-fill-preview {
+  width: 40px;
+  height: 60px;
+  background: var(--background-secondary-alt);
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.covershelf-fill-status {
+  font-size: 0.78em;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--background-modifier-border);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.covershelf-fill-status.is-searching {
+  background: color-mix(in srgb, var(--color-yellow) 20%, transparent);
+  color: var(--color-yellow);
+}
+
+.covershelf-fill-status.is-found {
+  background: color-mix(in srgb, var(--color-green) 20%, transparent);
+  color: var(--color-green);
+}
+
+.covershelf-fill-status.is-not-found {
+  background: color-mix(in srgb, var(--color-orange) 15%, transparent);
+  color: var(--color-orange);
+}
+
+.covershelf-fill-status.is-applied {
+  background: color-mix(in srgb, var(--interactive-accent) 20%, transparent);
+  color: var(--interactive-accent);
+}
+
+.covershelf-fill-status.is-skipped,
+.covershelf-fill-status.is-error {
+  background: color-mix(in srgb, var(--text-faint) 20%, transparent);
+  color: var(--text-faint);
+}
+
+.covershelf-skip-btn {
+  font-size: 0.78em;
+}
+
+.covershelf-fill-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+/* ── Library Overview Modal ──────────────────────────────── */
+
+.covershelf-overview-modal {
+  width: 88vw !important;
+  max-width: 1100px !important;
+  height: 82vh !important;
+}
+
+.covershelf-overview-modal .modal-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.covershelf-overview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.covershelf-overview-header h2 {
+  margin: 0;
+}
+
+.covershelf-overview-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.covershelf-overview-count {
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+.covershelf-fill-missing-btn {
+  font-size: 0.85em;
+}
+
+.covershelf-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  padding: 4px 2px 8px;
+}
+
+.covershelf-overview-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 6px;
+  padding: 6px;
+  transition: background 0.1s;
+}
+
+.covershelf-overview-item:hover {
+  background: var(--background-modifier-hover);
+}
+
+.covershelf-overview-img-wrap {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.covershelf-overview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.covershelf-overview-img-wrap.covershelf-no-cover {
+  background: var(--background-secondary-alt);
+}
+
+.covershelf-no-cover-icon {
+  font-size: 1.4em;
+  color: var(--text-faint);
+  font-weight: 300;
+}
+
+.covershelf-overview-title {
+  font-size: 0.74em;
+  color: var(--text-normal);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.3;
+}
