@@ -3,7 +3,7 @@
   "name": "CoverShelf",
   "version": "1.0.0",
   "minAppVersion": "1.4.0",
-  "description": "Browse, preview, and swap book covers from Google Books and Open Library — individually or in bulk.",
+  "description": "Find and save book covers from Google Books and Open Library, one note or in bulk.",
   "author": "dylanchid",
   "authorUrl": "https://github.com/dylanchid",
   "isDesktopOnly": false
