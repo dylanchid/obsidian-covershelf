@@ -21,40 +21,59 @@ function googleBooksUrl(thumbnailUrl: string, zoom: number): string {
     .replace('&edge=curl', '');
 }
 
+function googleBooksQuery(title: string, author: string, isbn?: string): string {
+  const isbnValue = isbn?.trim();
+  if (isbnValue) return `isbn:${isbnValue}`;
+
+  const parts: string[] = [];
+  const titleValue = title.trim();
+  const authorValue = author.trim();
+  if (titleValue) parts.push(`intitle:"${titleValue}"`);
+  if (authorValue) parts.push(`inauthor:"${authorValue}"`);
+  return parts.join(' ');
+}
+
+export interface CoverSearchResponse {
+  results: CoverResult[];
+  error?: string;
+}
+
 export async function searchGoogleBooks(
   title: string,
   author: string,
   isbn?: string
-): Promise<CoverResult[]> {
-  const query = isbn
-    ? `isbn:${isbn}`
-    : `intitle:${encodeURIComponent(title)}+inauthor:${encodeURIComponent(author)}`;
+): Promise<CoverSearchResponse> {
+  const query = googleBooksQuery(title, author, isbn);
+  if (!query) return { results: [] };
 
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=6`;
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=6`;
 
   try {
     const response = await requestUrl({ url });
     const data = response.json;
 
-    if (!data.items) return [];
+    if (!data.items) return { results: [] };
 
-    return data.items
-      .filter((item: any) => item.volumeInfo?.imageLinks?.thumbnail)
-      .map((item: any): CoverResult => {
-        const thumb: string = item.volumeInfo.imageLinks.thumbnail;
-        return {
-          id: `gb-${item.id}`,
-          source: 'google-books',
-          displayUrl: googleBooksUrl(thumb, 1),
-          downloadUrl: googleBooksUrl(thumb, 0),
-          meta: {
-            publisher: item.volumeInfo.publisher,
-            year: item.volumeInfo.publishedDate?.split('-')[0],
-          },
-        };
-      });
-  } catch {
-    return [];
+    return {
+      results: data.items
+        .filter((item: any) => item.volumeInfo?.imageLinks?.thumbnail)
+        .map((item: any): CoverResult => {
+          const thumb: string = item.volumeInfo.imageLinks.thumbnail;
+          return {
+            id: `gb-${item.id}`,
+            source: 'google-books',
+            displayUrl: googleBooksUrl(thumb, 1),
+            downloadUrl: googleBooksUrl(thumb, 0),
+            meta: {
+              publisher: item.volumeInfo.publisher,
+              year: item.volumeInfo.publishedDate?.split('-')[0],
+            },
+          };
+        }),
+    };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return { results: [], error: message };
   }
 }
 
@@ -71,9 +90,16 @@ export async function searchOpenLibrary(
   author: string,
   isbn?: string
 ): Promise<{ results: CoverResult[]; workKey?: string }> {
-  const params = isbn
-    ? `isbn=${isbn}`
-    : `title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}`;
+  const isbnValue = isbn?.trim();
+  const params = isbnValue
+    ? `isbn=${encodeURIComponent(isbnValue)}`
+    : [
+        title.trim() && `title=${encodeURIComponent(title.trim())}`,
+        author.trim() && `author=${encodeURIComponent(author.trim())}`,
+      ]
+        .filter(Boolean)
+        .join('&');
+  if (!params) return { results: [] };
   const url = `https://openlibrary.org/search.json?${params}&fields=key,cover_i&limit=5`;
 
   try {

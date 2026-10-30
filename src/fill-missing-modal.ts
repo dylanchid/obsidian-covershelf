@@ -1,5 +1,5 @@
 import { App, Modal, Notice } from 'obsidian';
-import { searchGoogleBooks, downloadCoverImage } from './api';
+import { searchGoogleBooks, searchOpenLibrary, downloadCoverImage } from './api';
 import { applyNewCover } from './note-writer';
 import { BookInfo, CoverResult, CovershelfSettings } from './types';
 
@@ -39,7 +39,7 @@ export class FillMissingModal extends Modal {
     const header = contentEl.createDiv('covershelf-fill-header');
     header.createEl('h2', { text: `Fill Missing Covers` });
     header.createEl('p', {
-      text: `${this.books.length} book${this.books.length !== 1 ? 's' : ''} with no cover — searching Google Books for each.`,
+      text: `${this.books.length} book${this.books.length !== 1 ? 's' : ''} with no cover — searching Google Books, then Open Library.`,
       cls: 'covershelf-fill-subtitle',
     });
 
@@ -105,11 +105,20 @@ export class FillMissingModal extends Modal {
       entry.statusEl.textContent = 'Searching…';
       entry.statusEl.className = 'covershelf-fill-status is-searching';
 
-      const results = await searchGoogleBooks(
+      const gbSearch = await searchGoogleBooks(
         entry.book.title,
         entry.book.author,
         entry.book.isbn
       );
+      let results = gbSearch.results;
+      if (results.length === 0) {
+        const olSearch = await searchOpenLibrary(
+          entry.book.title,
+          entry.book.author,
+          entry.book.isbn
+        );
+        results = olSearch.results;
+      }
 
       if ((entry.status as string) === 'skipped') continue; // user skipped while searching
 

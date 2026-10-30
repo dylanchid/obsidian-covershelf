@@ -111,13 +111,18 @@ export class CoverPickerModal extends Modal {
     const gbSpinner = gbSection.createDiv('covershelf-spinner');
     gbSpinner.textContent = 'Searching…';
 
-    const gbResults = await searchGoogleBooks(title, author, isbn);
+    const gbSearch = await searchGoogleBooks(title, author, isbn);
     gbSpinner.remove();
 
-    if (gbResults.length === 0) {
-      gbSection.createEl('p', { text: 'No results', cls: 'covershelf-no-results' });
+    if (gbSearch.results.length === 0) {
+      gbSection.createEl('p', {
+        text: gbSearch.error
+          ? 'Google Books is unavailable. Open Library results are below.'
+          : 'No results',
+        cls: 'covershelf-no-results',
+      });
     } else {
-      for (const result of gbResults) {
+      for (const result of gbSearch.results) {
         this.renderCoverItem(gbGrid, result, selectedInfo, applyBtn);
       }
     }

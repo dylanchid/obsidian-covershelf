@@ -10,7 +10,7 @@ CoverShelf downloads selected images into the configured covers folder and updat
 
 ## Network use
 
-Cover searches and image downloads contact Google Books (`www.googleapis.com` and its image hosts) and Open Library (`openlibrary.org` and `covers.openlibrary.org`). Search requests include book title, author, or ISBN from the note. CoverShelf does not require an account.
+Cover searches and image downloads contact Google Books (`www.googleapis.com` and its image hosts) and Open Library (`openlibrary.org` and `covers.openlibrary.org`). Search requests include book title, author, or ISBN from the note. CoverShelf does not require an account. Google Books without an API key is quota-limited and can return no covers; the picker and bulk fill then use Open Library.
 
 ## Install manually
 
