@@ -13,7 +13,6 @@ export class CovershelfSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl('h1', { text: 'CoverShelf' });
     containerEl.createEl('p', {
       text: 'Configure the folders CoverShelf scans for book notes and cover images.',
       cls: 'setting-item-description',
